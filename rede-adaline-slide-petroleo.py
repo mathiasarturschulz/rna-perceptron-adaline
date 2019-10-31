@@ -6,13 +6,13 @@ from time import time
 
 
 # Dataset
-df = pd.read_excel('datasets/Dados_Treinamento_Adaline.xls', header = 0)
+df = pd.read_excel('datasets/Dados_Treinamento_Perceptron.xls', header = 0)
 # Estrutura do dataset
 print(df.head())
 
 # Obtenção dos dados
-x = df.iloc[:, [0, 1, 2, 3]].values
-y = df.iloc[:, 4].values
+x = df.iloc[:, [0, 1, 2]].values
+y = df.iloc[:, 3].values
 
 
 # Variáveis
@@ -35,7 +35,7 @@ class Adaline(object):
         self,
         learning_rate = 0.01,
         precision = 0.00001,
-        random_weights = True,
+        random_weights = False,
     ):
         self.LEARNING_RATE = learning_rate
         self.PRECISION = precision
@@ -73,22 +73,32 @@ class Adaline(object):
             eqm_anterior = self.__eqm(x, y)
 
             for xi, yi in zip(x, y):
-                u = self.LEARNING_RATE * (yi - self.__predict(xi))
-                self.w[1:] += u * xi
+                u = self.__activationPotential(xi)
+                # u = self.LEARNING_RATE * (yi - self.__predict(xi))
+                
+                # self.w[1:] += u * xi
+                # self.w[0] += u
+
+                self.w[1:] += self.LEARNING_RATE * (yi - u) * xi
                 self.w[0] += u
+
+                # u = self.LEARNING_RATE * (yi - self.__predict(xi))
+                # self.w[1:] += u * xi
+                # self.w[0] += u
+
             self.epoca = self.epoca + 1
             eqm_atual = self.__eqm(x, y)
         print('terminando loop...')
         return self
 
-
+    # Algoritmo EQM
     def __eqm(self, x, y):
         p = len(x)
         eqm = 0
 
         for xi, yi in zip(x, y):
-            u = self.LEARNING_RATE * (yi - self.__predict(xi))
-            eqm = eqm + ((yi - u) * (yi - u))
+            u = self.__activationPotential(xi)
+            eqm = eqm + ((yi - u))**2
         eqm = eqm / p
         print('eqm: %f' % eqm)
         return eqm
@@ -118,6 +128,7 @@ class Adaline(object):
         # Bias serve para aumentar o grau de liberdade dos ajustes dos pesos
         return product + self.w[0]
     
+    # Fase de Operação
     # Método que cálcula a função de ativação
     # Retorna 1 se o novo peso for >= 0 ou -1 se o novo peso for < 0
     def __predict(self, x):
@@ -139,10 +150,10 @@ print('Precisão requerida => %s' % adaline.PRECISION)
 
 # Validação
 # Dataset
-df = pd.read_excel('datasets/Dados_Validação_Adaline.xls', header = 0)
+df = pd.read_excel('datasets/Dados_Validação_Perceptron.xls', header = 0)
 
 # Obtenção dos dados
-x = df.iloc[:, [0, 1, 2, 3]].values
+x = df.iloc[:, [0, 1, 2]].values
 
 print('\n=> Validação: ')
 adaline.validation(x)
