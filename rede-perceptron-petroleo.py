@@ -1,7 +1,5 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from mlxtend.plotting import plot_decision_regions
-from time import time
 from Class.Perceptron import Perceptron
 
 # Dataset
