@@ -35,6 +35,7 @@ class Adaline(object):
         self.initialWeights = self.__initialWeights(x)
         self.weights = list(self.initialWeights)
         self.iterations = 0
+        self.eqm = np.zeros(0)
 
         # Erro Quadrático Médio
         eqm_anterior = 0
@@ -54,6 +55,7 @@ class Adaline(object):
 
             self.iterations += 1
             eqm_atual = self.__eqm(x, y)
+            self.eqm = np.append(self.eqm, eqm_atual)
         return self
 
     # Método que cálcula o EQM (Erro Quadrático Médio)
