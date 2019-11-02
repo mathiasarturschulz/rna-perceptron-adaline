@@ -56,16 +56,16 @@ plt.ylabel('Erro Quadrático Médio')
 plt.show()
 
 
-# # Validação
-# # Dataset
-# df = pd.read_excel('datasets/Dados_Validação_Adaline.xls', header = 0)
+# Validação
+# Dataset
+df = pd.read_excel('datasets/Dados_Validação_Adaline.xls', header = 0)
 
-# # Obtenção dos dados
-# x = df.iloc[:, [0, 1, 2, 3]].values
+# Obtenção dos dados
+x = df.iloc[:, [0, 1, 2, 3]].values
 
-# print('\n=> Validação: ')
-# adaline.validation(x)
-# print('X - Propriedades de cada registro: ')
-# print(adaline.result_x)
-# print('Y - Classe de cada registro: ')
-# print(adaline.result_y)
+print('\n=> Validação: ')
+adaline.validation(x)
+print('X - Propriedades de cada registro: ')
+print(adaline.result_x)
+print('Y - Classe de cada registro: ')
+print(adaline.result_y)
